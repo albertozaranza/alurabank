@@ -2,11 +2,14 @@ class NegotiationController {
   private _inputDate: HTMLInputElement;
   private _inputAmount: HTMLInputElement;
   private _inputValue: HTMLInputElement;
+  private _negotiations = new Negotiations();
+  private _negotiationsView = new NegotiationsView("#negociacoesView");
 
   constructor() {
     this._inputDate = <HTMLInputElement>document.querySelector("#data");
     this._inputAmount = <HTMLInputElement>document.querySelector("#quantidade");
     this._inputValue = <HTMLInputElement>document.querySelector("#valor");
+    this._negotiationsView.update(this._negotiations);
   }
 
   _clear() {
@@ -24,8 +27,12 @@ class NegotiationController {
       parseFloat(this._inputValue.value)
     );
 
-    console.log(negotiation);
+    this._negotiations.add(negotiation);
+    this._negotiations
+      .toArray()
+      .forEach(({ amount, date, value, volume }) => {});
 
+    this._negotiationsView.update(this._negotiations);
     this._clear();
   }
 }
